@@ -20,6 +20,11 @@ bot.on("ready", function() {
   bot.user.setActivity('out for !help', { type: 'WATCHING' })
 });
 
+//error
+bot.on("error", function(err) {
+  console.error(err);
+});
+
 //When a message is received
 bot.on("message", function(message) {
 

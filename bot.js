@@ -2,6 +2,7 @@
 const Discord = require("discord.js");
 const config = require("./config.json");
 const dex = require("./Pokedex.json");
+const my_ver = require("./package.json").version;
 
 function logEnter(message, logdata)
 {
@@ -36,13 +37,17 @@ if(message.content.toLowerCase() == "!help")
 {
   var helpembed = new Discord.RichEmbed()
     .setTitle("~PokeMama Help Menu~")
-    .addField("Commands", "!ping\t\t\t\t\t- ping the Bot\n!purge <count> - delete messages in the channel. (Default value: 0)")
+    .addField("Commands", "!ping\t\t\t\t\t- ping the Bot\n!purge <count> - delete messages in the channel. (Default value: 0)\n!version\t\t\t\t- Bot Version\nwot ish <url> - pokemon name")
     .addBlankField()
     .addField("Info", "Author: "+(bot.users.get(config.AUTHOR_ID) || "RomeoPrince"))
     .setColor("0edcba");
   message.author.send(helpembed);
   message.channel.send(message.author+ ", Please check your DMs!")
 }
+
+//version
+else if(message.content.toLowerCase() == "!version")
+  message.channel.send(my_ver);
 
 //ping
 else if(message.content.toLowerCase() == "!ping")

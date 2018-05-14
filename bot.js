@@ -107,7 +107,10 @@ else if(message.author.id == config.PARTNER_ID)
     if(embed.title){
     if(embed.title.startsWith("A wild")){
       var purl=embed.image.url;
-      purl=dex.table[dex.table.findIndex(obj => obj.url==purl)].name;
+      var index = dex.table.findIndex(obj => obj.url==purl);
+      if(index == -1)
+        return;
+      purl=dex.table[index].name;
       message.channel.send(purl);
       var newpoke = new Discord.RichEmbed()
         .setTitle("New Pokemon Spotted!")

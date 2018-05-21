@@ -40,7 +40,7 @@ if(message.content.toLowerCase() == "!help")
 {
   var helpembed = new Discord.RichEmbed()
     .setTitle("~PokeMama Help Menu~")
-    .addField("Commands", "!ping\t\t\t\t\t- ping the Bot\n!purge <count> - delete messages in the channel. (Default value: 0)\n!version\t\t\t   - Bot Version\n!name <url> \t   - pokemon name")
+    .addField("Commands", "!ping\t\t\t\t\t- ping the Bot\n!purge <count> - delete messages in the channel. (Default value: 0)\n!version\t\t\t   - Bot Version\n!name <url> \t  - pokemon name")
     .addBlankField()
     .addField("Info", "Author: "+(bot.users.get(config.AUTHOR_ID) || "RomeoPrince"))
     .setColor("0edcba");

@@ -3,6 +3,8 @@ const Discord = require("discord.js");
 const config = require("./config.json");
 const dex = require("./Pokedex.json");
 const my_ver = require("./package.json").version;
+const Hashes = require("jshashes");
+const request = require("snekfetch");
 
 function logEnter(message, logdata)
 {
@@ -106,8 +108,10 @@ else if(message.author.id == config.PARTNER_ID)
   message.embeds.forEach((embed) => {
     if(embed.title){
     if(embed.title.startsWith("A wild")){
-      var purl=embed.image.url;
-      var index = dex.table.findIndex(obj => obj.url==purl);
+      var purl=null;
+      request.get(embed.image.url)
+      .then(r => purl = new Hashes.MD5().hex(r.body.toString()));
+      var index = dex.table.findIndex(obj => obj.md5==purl);
       if(index == -1)
         return;
       purl=dex.table[index].name;

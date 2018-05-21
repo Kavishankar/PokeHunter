@@ -1,6 +1,6 @@
 {
   "name": "PokeMama",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Gotta Catch 'em all!",
   "main": "bot.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "RomeoPrince",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.3.2"
+    "discord.js": "^11.3.2",
+	"jshashes": "^1.0.7"
   }
 }

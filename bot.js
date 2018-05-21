@@ -36,7 +36,7 @@ if(message.author == bot.user) return;
 if(message.channel.type == "dm") return ;
 
 //help
-if(message.content.toLowerCase() == "!help")
+if(message.content.toLowerCase() == "p.help")
 {
   var helpembed = new Discord.RichEmbed()
     .setTitle("~PokeMama Help Menu~")
@@ -49,17 +49,17 @@ if(message.content.toLowerCase() == "!help")
 }
 
 //version
-else if(message.content.toLowerCase() == "!version")
+else if(message.content.toLowerCase() == "p.version")
   message.channel.send(my_ver);
 
 //ping
-else if(message.content.toLowerCase() == "!ping")
+else if(message.content.toLowerCase() == "p.ping")
   message.channel.send("Pong! "+parseInt(bot.ping)+"ms");
 
 //purge
-else if(message.content.toLowerCase().startsWith("!purge"))
+else if(message.content.toLowerCase().startsWith("p.purge"))
 {
-  var count = Number(message.content.substring(7)) + 1;
+  var count = Number(message.content.substring(8)) + 1;
   if(count < 1 || isNaN(count) || count > 50)
   {
     message.channel.send("Invalid argument! Please try again.");
@@ -98,11 +98,11 @@ else if(message.content.toLowerCase().startsWith("!purge"))
 }
 
 //wot ish
-else if(message.content.toLowerCase().startsWith("!name "))
+else if(message.content.toLowerCase().startsWith("p.name "))
 {
   if(whitelist.indexOf(message.guild.id) != -1 || message.member.roles.find("name", "A new role"))
   {
-    request.get(message.content.substring(6))
+    request.get(message.content.substring(7))
     .then(r => {
       var md5 = new Hashes.MD5().hex(r.body.toString());
       var index = dex.table.findIndex(obj => obj.md5==md5);

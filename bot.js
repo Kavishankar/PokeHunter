@@ -21,7 +21,7 @@ function logEnter(message, logdata)
 var bot = new Discord.Client();
 bot.on("ready", function() {
   console.log('Logged in as '+bot.user.username);
-  bot.user.setActivity('out for !help', { type: 'WATCHING' })
+  bot.user.setActivity('out for p.help', { type: 'WATCHING' })
 });
 
 //error

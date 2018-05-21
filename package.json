@@ -1,6 +1,6 @@
 {
-  "name": "PokeMama",
-  "version": "3.0.0",
+  "name": "pokemama",
+  "version": "3.1.0",
   "description": "Gotta Catch 'em all!",
   "main": "bot.js",
   "scripts": {

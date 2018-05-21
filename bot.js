@@ -5,6 +5,7 @@ const dex = require("./Pokedex.json");
 const my_ver = require("./package.json").version;
 const Hashes = require("jshashes");
 const request = require("snekfetch");
+let whitelist = config.WHITELIST.split(",");
 
 function logEnter(message, logdata)
 {
@@ -39,7 +40,7 @@ if(message.content.toLowerCase() == "!help")
 {
   var helpembed = new Discord.RichEmbed()
     .setTitle("~PokeMama Help Menu~")
-    .addField("Commands", "!ping\t\t\t\t\t- ping the Bot\n!purge <count> - delete messages in the channel. (Default value: 0)\n!version\t\t\t   - Bot Version\nwot ish <url> \t- pokemon name")
+    .addField("Commands", "!ping\t\t\t\t\t- ping the Bot\n!purge <count> - delete messages in the channel. (Default value: 0)\n!version\t\t\t   - Bot Version\n!name <url> \t\t- pokemon name")
     .addBlankField()
     .addField("Info", "Author: "+(bot.users.get(config.AUTHOR_ID) || "RomeoPrince"))
     .setColor("0edcba");
@@ -97,13 +98,23 @@ else if(message.content.toLowerCase().startsWith("!purge"))
 }
 
 //wot ish
-else if(message.content.toLowerCase().startsWith("was ist "))
+else if(message.content.toLowerCase().startsWith("!name "))
 {
-  message.channel.send(dex.table[dex.table.findIndex(obj => obj.url==message.content.substring(8))].name);
+  if(whitelist.indexOf(message.guild.id) != -1 || message.member.roles.find("name", "A new role"))
+  {
+    request.get(message.content.substring(6))
+    .then(r => {
+      var md5 = new Hashes.MD5().hex(r.body.toString());
+      var index = dex.table.findIndex(obj => obj.md5==md5);
+      if(index == -1)
+      return;
+      message.channel.send(dex.table[index].name);
+    });
+  }
 }
 
 //When a New pokemon appears
-else if(message.author.id == config.PARTNER_ID)
+else if(message.author.id == config.PARTNER_ID && whitelist.indexOf(message.guild.id) != -1)
 {
   message.embeds.forEach((embed) => {
     if(embed.title){
@@ -116,7 +127,10 @@ else if(message.author.id == config.PARTNER_ID)
         if(index == -1)
           return;
         purl=dex.table[index].name;
-        message.channel.send(purl);
+        if(message.guild.id != config.LOLI_ID || !dex.table[index].catch)
+          message.channel.send(purl);
+        else
+          message.channel.send("@Everyone, Its a "+purl+"!");
         var newpoke = new Discord.RichEmbed()
         .setTitle("New Pokemon Spotted!")
         .setThumbnail(message.guild.iconURL)
@@ -135,4 +149,4 @@ else if(message.author.id == config.PARTNER_ID)
 });
 
 //login with token
-bot.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN); 

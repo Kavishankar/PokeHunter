@@ -100,7 +100,7 @@ else if(message.content.toLowerCase().startsWith("p.purge"))
 //wot ish
 else if(message.content.toLowerCase().startsWith("p.name "))
 {
-  if(whitelist.indexOf(message.guild.id) != -1 || message.member.roles.find("name", "A new role"))
+  if(message.member.roles.find("name", "A new role"))
   {
     request.get(message.content.substring(7))
     .then(r => {

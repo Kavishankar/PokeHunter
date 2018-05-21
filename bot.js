@@ -110,13 +110,14 @@ else if(message.author.id == config.PARTNER_ID)
     if(embed.title.startsWith("A wild")){
       var purl=null;
       request.get(embed.image.url)
-      .then(r => purl = new Hashes.MD5().hex(r.body.toString()));
-      var index = dex.table.findIndex(obj => obj.md5==purl);
-      if(index == -1)
-        return;
-      purl=dex.table[index].name;
-      message.channel.send(purl);
-      var newpoke = new Discord.RichEmbed()
+      .then(r => {
+        purl = new Hashes.MD5().hex(r.body.toString());
+        var index = dex.table.findIndex(obj => obj.md5==purl);
+        if(index == -1)
+          return;
+        purl=dex.table[index].name;
+        message.channel.send(purl);
+        var newpoke = new Discord.RichEmbed()
         .setTitle("New Pokemon Spotted!")
         .setThumbnail(message.guild.iconURL)
         .setColor("#22dd22")
@@ -125,6 +126,7 @@ else if(message.author.id == config.PARTNER_ID)
         .addField("Channel", message.channel.name)
         .addField("Pokemon", purl);
         logEnter(message, newpoke);
+      });  
     }
   }
   });

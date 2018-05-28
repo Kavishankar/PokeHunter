@@ -114,7 +114,7 @@ else if(message.content.toLowerCase().startsWith("p.name "))
 }
 
 //When a New pokemon appears
-else if(message.author.id == config.PARTNER_ID && whitelist.indexOf(message.guild.id) != -1)
+else if(message.author.id == config.PARTNER_ID && ((whitelist.indexOf(message.guild.id) != -1) || message.channel.id == "438524476309635074"))
 {
   message.embeds.forEach((embed) => {
     if(embed.title){

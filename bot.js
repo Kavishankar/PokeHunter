@@ -97,6 +97,12 @@ else if(message.content.toLowerCase().startsWith("p.purge"))
   }
 }
 
+//Goodie n Classy
+else if(message.content.toLowerCase() == "p!catch classy" && message.author.id == "366568101145214978")
+{
+  message.reply("Congratulations! You caught a Classy!");
+}
+
 //wot ish
 else if(message.content.toLowerCase().startsWith("p.name "))
 {

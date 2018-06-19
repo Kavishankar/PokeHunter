@@ -130,22 +130,28 @@ else if(message.author.id == config.PARTNER_ID && ((whitelist.indexOf(message.gu
       .then(r => {
         purl = new Hashes.MD5().hex(r.body.toString());
         var index = dex.table.findIndex(obj => obj.md5==purl);
-        if(index == -1)
-          return;
-        purl=dex.table[index].name;
-        if(message.guild.id != config.LOLI_ID || !dex.table[index].catch)
+        if(index != -1)
+        {
+        purl=dex.table[index].name;       
           message.channel.send(purl);
+          var newpoke = new Discord.RichEmbed()
+          .setThumbnail(message.guild.iconURL)
+          .setColor("#22dd22")
+          .setFooter(message.createdAt.toString().substring(0,message.createdAt.toString().indexOf('+')))
+          .addField("Server", message.guild.name)
+          .addField("Channel", message.channel.name)
+          .setTitle("New Pokemon Spotted!")
+          .addField("Pokemon", purl);
+          logEnter(message, newpoke);
+        }
         else
-          message.channel.send("@Everyone, Its a "+purl+"!");
-        var newpoke = new Discord.RichEmbed()
-        .setTitle("New Pokemon Spotted!")
-        .setThumbnail(message.guild.iconURL)
-        .setColor("#22dd22")
-        .setFooter(message.createdAt.toString().substring(0,message.createdAt.toString().indexOf('+')))
-        .addField("Server", message.guild.name)
-        .addField("Channel", message.channel.name)
-        .addField("Pokemon", purl);
-        logEnter(message, newpoke);
+        {
+          var newpoke = new Discord.RichEmbed()
+          .setTitle("Unknown Pokemon!")
+          .setColor("#22dd22")
+          .setImage(embed.image.url);
+          bot.channels.get(config.UNKNOWN_POKES).send(newpoke);
+        }
       });  
     }
   }

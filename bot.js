@@ -124,7 +124,8 @@ else if(message.author.id == config.PARTNER_ID)
 {
   message.embeds.forEach((embed) => {
     if(embed.title){
-    if(embed.title.startsWith("A wild")){
+    if(embed.title.indexOf("‌A wild pokémon has appeared")!= -1){
+      console.log("A new one at "+message.channel.name);
       var purl=null;
       request.get(embed.image.url)
       .then(r => {
@@ -146,11 +147,12 @@ else if(message.author.id == config.PARTNER_ID)
         }
         else
         {
-          var newpoke = new Discord.RichEmbed()
+          bot.channels.get(config.UNKNOWN_POKES).send(
+            new Discord.RichEmbed()
           .setTitle("Unknown Pokemon!")
           .setColor("#22dd22")
-          .setImage(embed.image.url);
-          bot.channels.get(config.UNKNOWN_POKES).send(newpoke);
+          .setImage(embed.image.url)
+          );
         }
       });  
     }

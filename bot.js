@@ -120,7 +120,7 @@ else if(message.content.toLowerCase().startsWith("p.name "))
 }
 
 //When a New pokemon appears
-else if(message.author.id == config.PARTNER_ID && ((whitelist.indexOf(message.guild.id) != -1) || message.channel.id == "438524476309635074"))
+else if(message.author.id == config.PARTNER_ID)
 {
   message.embeds.forEach((embed) => {
     if(embed.title){
@@ -130,7 +130,7 @@ else if(message.author.id == config.PARTNER_ID && ((whitelist.indexOf(message.gu
       .then(r => {
         purl = new Hashes.MD5().hex(r.body.toString());
         var index = dex.table.findIndex(obj => obj.md5==purl);
-        if(index != -1)
+        if(index != -1 && ((whitelist.indexOf(message.guild.id) != -1) || message.channel.id == "438524476309635074"))
         {
         purl=dex.table[index].name;       
           message.channel.send(purl);

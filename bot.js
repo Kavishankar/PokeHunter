@@ -123,8 +123,8 @@ else if(message.content.toLowerCase().startsWith("p.name "))
 else if(message.author.id == config.PARTNER_ID)
 {
   message.embeds.forEach((embed) => {
-    if(embed.title){
-    if(embed.title.indexOf("‌A wild pokémon has appeared")!= -1){
+
+    if(embed.title && embed.title.indexOf("‌A wild pokémon has appeared")!= -1){
       console.log("A new one at "+message.channel.name);
       var purl=null;
       request.get(embed.image.url)
@@ -156,7 +156,17 @@ else if(message.author.id == config.PARTNER_ID)
         }
       });  
     }
-  }
+
+    else if((config.GETNUM_WL_SERVERS.indexOf(message.guild.id)!=-1 || config.GETNUM_WL_CHANNELS.indexOf(message.channel.id)!=-1) && embed.title && embed.title == "Your pokémon:")
+    {
+      let output = "p!p add ";
+      let content = embed.description.split("\n");
+      content.forEach((line) => {
+        output+=line.substring(line.indexOf("Number:")).split(" ")[1]+" ";
+      });
+      message.channel.send(output.trim());
+    }
+
   });
 }
 

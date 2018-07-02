@@ -17,6 +17,23 @@ function logEnter(message, logdata)
           message.channel.send("Log channel not found!");
 }
 
+function deleteMessageAfter(message,timeout)
+{
+  setTimeout(() => {deleteMessage(message)},timeout);
+}
+
+function deleteMessage(message){
+  if(message.guild.member(bot.user).hasPermission("MANAGE_MESSAGES")){
+    message.delete()
+    .catch(console.error);
+  }
+}
+
+function getPrefix(id){
+  let index = config.USER_PREFIX.findIndex(obj => (obj.ID == id));
+  return index==-1?"p!":config.USER_PREFIX[index].PREFIX;
+}
+
 //Bot instance and Playing message
 var bot = new Discord.Client();
 bot.on("ready", function() {
@@ -119,6 +136,25 @@ else if(message.content.toLowerCase().startsWith("p.name "))
   }
 }
 
+else if(message.content.toLowerCase().startsWith("p!pokemon") && (config.GETNUM_WL_SERVERS.indexOf(message.guild.id) != -1 || config.GETNUM_WL_CHANNELS.indexOf(message.channel.id) != -1))
+{
+  const filter = m => (m.author.id == config.PARTNER_ID && m.embeds[0] && m.embeds[0].title && m.embeds[0].title == "Your pokémon:" );
+  message.channel.awaitMessages(filter, { max: 1, time: 10000, errors: ['time'] })
+  .then(messages => {
+    messages.forEach((msg) => {
+      let output = getPrefix(msg.author.id)+"p add ";
+      let content = msg.embeds[0].description.split("\n");
+      content.forEach((line) => {
+        output+=line.substring(line.indexOf("Number:")).split(" ")[1]+" ";
+      });
+      message.channel.send(output.trim())
+      .then( (delMsg) => {deleteMessageAfter(delMsg,10000);})
+      .catch(console.error);
+    });
+  })
+  .catch(console.error);
+}
+
 //When a New pokemon appears
 else if(message.author.id == config.PARTNER_ID)
 {
@@ -156,17 +192,6 @@ else if(message.author.id == config.PARTNER_ID)
         }
       });  
     }
-
-    else if((config.GETNUM_WL_SERVERS.indexOf(message.guild.id)!=-1 || config.GETNUM_WL_CHANNELS.indexOf(message.channel.id)!=-1) && embed.title && embed.title == "Your pokémon:")
-    {
-      let output = "p!p add ";
-      let content = embed.description.split("\n");
-      content.forEach((line) => {
-        output+=line.substring(line.indexOf("Number:")).split(" ")[1]+" ";
-      });
-      message.channel.send(output.trim());
-    }
-
   });
 }
 

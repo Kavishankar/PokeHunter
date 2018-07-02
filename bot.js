@@ -142,7 +142,7 @@ else if(message.content.toLowerCase().startsWith("p!pokemon") && (config.GETNUM_
   message.channel.awaitMessages(filter, { max: 1, time: 10000, errors: ['time'] })
   .then(messages => {
     messages.forEach((msg) => {
-      let output = getPrefix(msg.author.id)+"p add ";
+      let output = getPrefix(message.author.id)+"p add ";
       let content = msg.embeds[0].description.split("\n");
       content.forEach((line) => {
         output+=line.substring(line.indexOf("Number:")).split(" ")[1]+" ";

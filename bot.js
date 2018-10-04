@@ -155,6 +155,25 @@ else if(message.content.toLowerCase().startsWith("p!pokemon") && (config.GETNUM_
   .catch(console.error);
 }
 
+else if(message.content.toLowerCase().startsWith("p!market search") && (config.GETNUM_WL_SERVERS.indexOf(message.guild.id) != -1 || config.GETNUM_WL_CHANNELS.indexOf(message.channel.id) != -1))
+{
+  const filter = m => (m.author.id == config.PARTNER_ID && m.embeds[0] && m.embeds[0].title && m.embeds[0].title == "Pokécord Market:" );
+  message.channel.awaitMessages(filter, { max: 1, time: 10000, errors: ['time'] })
+  .then(messages => {
+    messages.forEach((msg) => {
+      let output = getPrefix(message.author.id)+"market buy";
+      let myEmbed = new Discord.RichEmbed()
+        .setColor(msg.embeds[0].color)
+        .setTitle(msg.embeds[0].title)
+        .setFooter(msg.embeds[0].footer)
+        .setDescription(msg.embeds[0].description.split("ID:").join(output))
+      message.channel.send(output.trim())
+      .catch(console.error);
+    });
+  })
+  .catch(console.error);
+}
+
 //When a New pokemon appears
 else if(message.author.id == config.PARTNER_ID)
 {

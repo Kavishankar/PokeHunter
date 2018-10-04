@@ -163,7 +163,7 @@ else if(message.content.toLowerCase().startsWith("p!market search") && (config.G
     messages.forEach((msg) => {
       let output = getPrefix(message.author.id)+"market buy";
       let e = msg.embeds[0];
-      message.channel.send(e.title+"\n"+e.description.split("ID:").join(output)+"\n"+e.footer.text)
+      message.channel.send("**"+e.title+"**"+"\n"+e.description.split("ID:").join(output)+"\n*"+e.footer.text+"*")
       .then(msg.delete())
       .catch(console.error);
     });

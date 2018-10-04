@@ -162,12 +162,8 @@ else if(message.content.toLowerCase().startsWith("p!market search") && (config.G
   .then(messages => {
     messages.forEach((msg) => {
       let output = getPrefix(message.author.id)+"market buy";
-      let myEmbed = new Discord.RichEmbed()
-        .setColor(msg.embeds[0].color)
-        .setTitle(msg.embeds[0].title)
-        .setFooter(msg.embeds[0].footer.text)
-        .setDescription(msg.embeds[0].description.split("ID:").join(output))
-      message.channel.send(myEmbed.description)
+      let e = msg.embeds[0];
+      message.channel.send(e.title+"\n"+e.description.split("ID:").join(output)+"\n"+e.footer.text)
       .then(msg.delete())
       .catch(console.error);
     });

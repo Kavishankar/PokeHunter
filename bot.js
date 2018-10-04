@@ -167,7 +167,7 @@ else if(message.content.toLowerCase().startsWith("p!market search") && (config.G
         .setTitle(msg.embeds[0].title)
         .setFooter(msg.embeds[0].footer)
         .setDescription(msg.embeds[0].description.split("ID:").join(output))
-      message.channel.send(output.trim())
+      message.channel.send(myEmbed)
       .catch(console.error);
     });
   })

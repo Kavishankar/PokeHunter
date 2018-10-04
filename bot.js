@@ -165,9 +165,10 @@ else if(message.content.toLowerCase().startsWith("p!market search") && (config.G
       let myEmbed = new Discord.RichEmbed()
         .setColor(msg.embeds[0].color)
         .setTitle(msg.embeds[0].title)
-        .setFooter(msg.embeds[0].footer)
+        .setFooter(msg.embeds[0].footer.text)
         .setDescription(msg.embeds[0].description.split("ID:").join(output))
       message.channel.send(myEmbed)
+      .then(msg.delete())
       .catch(console.error);
     });
   })
